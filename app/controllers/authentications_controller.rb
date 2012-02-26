@@ -6,13 +6,8 @@ class AuthenticationsController < ApplicationController
   def create
    auth=request.env["omniauth.auth"]
    if auth["provider"] =="linkedin"
-        #user=User.find_by_linkedinuid(auth["uid"]) || User.create_linkedin_details(auth)
-        #user=User.create_linkedin_details(auth)
         user=User.find_by_linkedinuid(auth["uid"]) || User.new(:linkedinuid => auth["uid"],:first_name =>auth["info"]["first_name"],:last_name => auth["info"]["last_name"],:email => auth["info"]["email"],:linkedinImg => auth["info"]["image"])
 	user.save
-	#User.delete(user)
-        #user=User.new()
-   	#render :text => user.linkedinImg
 	session[:user_id] = auth["uid"]
 	redirect_to root_url
    else
@@ -27,7 +22,6 @@ class AuthenticationsController < ApplicationController
 	session[:fbuser_id] = auth["uid"]	
 	redirect_to root_url
    end
-   #render :text => auth['extra'].to_yaml
   end
 
   def destroy
