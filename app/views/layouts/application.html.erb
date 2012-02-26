@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LinkedinFbApp</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+
+<% if !currentlinkedin_user %>
+        <a href="/auth/linkedin" class="auth_provider">
+        <%= image_tag "linkedin_64.png", :size => "64x64", :alt => "Linkedin" %>
+        Sign in to Linkedin
+        </a>
+<% elsif !currentfb_user %>
+        <a href="/auth/facebook" class="auth_provider">
+        <%= image_tag "facebook_64.png", :size => "64x64", :alt => "Facebook" %>
+        Sign in to Facebook
+        </a>
+<% else %>
+	First Name: <%=currentfb_user.first_name%><br>	
+	Last Name: <%=currentfb_user.last_name%><br>	
+	Email: <%=currentfb_user.email%><br>	
+	Location: <%=currentfb_user.location%><br>	
+	Linkedin Image: <br> <img src='<%=currentfb_user.linkedinImg%>'> </img>  <br>	
+	Facebook Image: <br> <img src='<%=currentfb_user.fbImg%>'> </img>  <br>	
+	<a href="/signout"> Signout </a>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>
